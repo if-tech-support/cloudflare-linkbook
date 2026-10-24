@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ja">
+<head><meta charset="UTF-8"><title>WebSocket接続確認</title></head>
+<body>
+  <h1>WebSocket接続確認</h1>
+  <p id="result" role="status">接続しています</p>
+  <script>
+    const result = document.querySelector('#result');
+    const url = new URL('/api/ws', location.href);
+    url.protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const socket = new WebSocket(url);
+    socket.addEventListener('open', () => {
+      result.textContent = '接続しました。応答を待っています';
+      socket.send('ping'); // 追加: 確認は1回だけ送る
+    });
+    socket.addEventListener('message', (event) => {
+      result.textContent = `受信: ${event.data}`;
+    });
+    socket.addEventListener('error', () => {
+      result.textContent = '接続エラー。開発サーバーを確認してください';
+    });
+    socket.addEventListener('close', () => {
+      result.textContent = '切断されました。再読み込みで接続し直せます';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>保存したリンクに質問</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/admin/ask.js" defer></script>
+</head>
+<body>
+  <main>
+    <h1>保存したリンクに質問</h1>
+    <p>質問ごとにWorkers AIとVectorizeの無料枠を使います。</p>
+    <form id="ask-form">
+      <label>質問 <textarea id="question" maxlength="500" required></textarea></label>
+      <button>質問する</button>
+    </form>
+    <p id="status" role="status"></p>
+    <p id="answer" style="white-space: pre-wrap"></p>
+    <ol id="sources"></ol>
+    <a href="/">一覧へ戻る</a>
+  </main>
+</body>
+</html>

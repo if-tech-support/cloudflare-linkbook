@@ -1,0 +1,138 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "linkbook",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-24",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/api/*",
+      "/thumbs/*"
+    ]
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "APP_NAME": "リンク帳",
+    "MAX_LINKS": 100
+  },
+  "env": {
+    "staging": {
+      "name": "linkbook-staging",
+      "vars": {
+        "APP_NAME": "リンク帳（ステージング）",
+        "MAX_LINKS": 10
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "linkbook-db-staging",
+          "database_id": "xxxxxxxx"
+        }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "THUMBS",
+          "bucket_name": "linkbook-thumbs-staging"
+        }
+      ],
+      "kv_namespaces": [
+        {
+          "binding": "SETTINGS",
+          "id": "xxxxxxxx"
+        }
+      ],
+      "queues": {
+        "producers": [
+          {
+            "binding": "FETCH_QUEUE",
+            "queue": "linkbook-fetch-staging"
+          }
+        ],
+        "consumers": [
+          {
+            "queue": "linkbook-fetch-staging",
+            "max_batch_size": 1,
+            "max_batch_timeout": 1,
+            "max_retries": 3,
+            "dead_letter_queue": "linkbook-fetch-dlq-staging"
+          }
+        ]
+      },
+      "triggers": {
+        "crons": []
+      },
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "NOTIFY_ROOM",
+            "class_name": "NotifyRoom"
+          }
+        ]
+      },
+      "exports": {
+        "NotifyRoom": {
+          "type": "durable-object",
+          "storage": "sqlite"
+        }
+      }
+    }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "linkbook-db",
+      "database_id": "xxxxxxxx"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "THUMBS",
+      "bucket_name": "linkbook-thumbs"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "SETTINGS",
+      "id": "xxxxxxxx"
+    }
+  ],
+  "queues": {
+    "producers": [
+      {
+        "binding": "FETCH_QUEUE",
+        "queue": "linkbook-fetch"
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "linkbook-fetch",
+        "max_batch_size": 1,
+        "max_batch_timeout": 1,
+        "max_retries": 3,
+        "dead_letter_queue": "linkbook-fetch-dlq"
+      }
+    ]
+  },
+  "triggers": {
+    "crons": [
+      "0 0 * * MON"
+    ]
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "NOTIFY_ROOM",
+        "class_name": "NotifyRoom"
+      }
+    ]
+  },
+  "exports": {
+    "NotifyRoom": {
+      "type": "durable-object",
+      "storage": "sqlite"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "linkbook",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-24",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/api/*",
+      "/thumbs/*"
+    ]
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "APP_NAME": "リンク帳",
+    "MAX_LINKS": 100
+  },
+  "env": {
+    "staging": {
+      "name": "linkbook-staging",
+      "vars": {
+        "APP_NAME": "リンク帳（ステージング）",
+        "MAX_LINKS": 3
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "linkbook-db-staging",
+          "database_id": "yyyyyyyy"
+        }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "THUMBS",
+          "bucket_name": "linkbook-thumbs-staging"
+        }
+      ]
+    }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "linkbook-db",
+      "database_id": "xxxxxxxx"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "THUMBS",
+      "bucket_name": "linkbook-thumbs"
+    }
+  ]
+}

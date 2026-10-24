@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "linkbook",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-24",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/api/*"
+    ]
+  },
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "APP_NAME": "リンク帳",
+    "MAX_LINKS": 100
+  },
+  "env": {
+    "staging": {
+      "name": "linkbook-staging",
+      "vars": {
+        "APP_NAME": "リンク帳（ステージング）",
+        "MAX_LINKS": 3
+      }
+    }
+  }
+}

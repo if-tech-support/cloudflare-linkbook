@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  background: #f5f7fa;
+  color: #182230;
+  font-family: system-ui, sans-serif;
+}
+main { max-width: 640px; margin: 0 auto; padding: 24px; }
+form { display: grid; gap: 16px; }
+label { display: grid; gap: 6px; }
+input, button { box-sizing: border-box; width: 100%; padding: 12px; font: inherit; }
+button { background: #175cd3; color: white; border: 0; cursor: pointer; }
+button:disabled { opacity: 0.6; cursor: wait; }
+li { margin-bottom: 12px; overflow-wrap: anywhere; }
+a { color: #175cd3; }
+#message { min-height: 1.5em; }
